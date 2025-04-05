@@ -1,0 +1,22 @@
+{
+  "name": "playwright-cucumber",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/maniziva/playwright-cucumber#readme",
+  "bugs": {
+    "url": "https://github.com/maniziva/playwright-cucumber/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maniziva/playwright-cucumber.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {},
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.14.0"
+  }
+}

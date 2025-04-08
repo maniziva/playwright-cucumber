@@ -26,7 +26,7 @@ jobs:
 
       - run:
           name: Run Cucumber tests
-          command: npx cucumber-js --require-module ts-node/register --require tests/steps/**/*.ts --format json:reports/cucumber_report.json
+          command: npx cucumber-js --require-module ts-node/register --require features/step-definitions/**/*.ts --require features/support/**/*.ts --format json:reports/cucumber_report.json
 
       - run:
           name: Generate HTML report

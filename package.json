@@ -15,9 +15,10 @@
   "type": "commonjs",
   "main": "index.js",
 "scripts": {
+  "set:start": "node -e \"require('fs').writeFileSync('reports/start-time.txt', new Date().toISOString())\"",
   "test": "cucumber-js --require-module ts-node/register --require features/step-definitions/**/*.ts --require features/support/**/*.ts --format json:reports/cucumber_report.json",
   "report": "ts-node generate-report.ts",
-  "test:report": "npm run test && npm run report"
+  "test:report": "npm run set:start && npm run test && npm run report"
 },
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",

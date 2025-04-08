@@ -15,6 +15,10 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
+          
+      - run:
+          name: Create reports directory
+          command: mkdir -p reports
 
       - run:
           name: Set start time

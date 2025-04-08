@@ -14,13 +14,16 @@
   "author": "",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {
-    "test": "cucumber-js features --require-module ts-node/register --require features/step-definitions/**/*.ts --require features/support/**/*.ts"
-  },
+"scripts": {
+  "test": "cucumber-js --require-module ts-node/register --require features/step-definitions/**/*.ts --require features/support/**/*.ts --format json:reports/cucumber_report.json",
+  "report": "ts-node generate-report.ts",
+  "test:report": "npm run test && npm run report"
+},
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.14.0",
+    "multiple-cucumber-html-reporter": "^3.9.2",
     "playwright": "^1.51.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

@@ -1,4 +1,4 @@
-Feature: Login and Logout from Contact List App
+Feature: Contact List App
 
   Scenario: Successful login and logout
     Given I open the Contact List App

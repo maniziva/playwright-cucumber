@@ -1,4 +1,5 @@
 import { chromium, Browser, Page } from 'playwright';
+import config from '../../playwright.config';
 import { Before, After } from '@cucumber/cucumber';
 import fs from 'fs';
 import path from 'path';

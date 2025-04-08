@@ -5,9 +5,36 @@
 import reporter from 'multiple-cucumber-html-reporter';
 import fs from 'fs';
 import os from 'os';
+import { chromium } from 'playwright';
 
-const platformName = "MacOS Sequoia"; // 'darwin', 'win32', 'linux'
-const platformVersion = "15.4"; // e.g., '22.3.0' (macOS Ventura), '10.0.19045' (Windows 11)
+async function getChromeVersion(): Promise<string> {
+    const browser = await chromium.launch();
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const userAgent = await page.evaluate(() => navigator.userAgent);
+    await browser.close();
+  
+    const match = userAgent.match(/Chrome\/([\d.]+)/);
+    return match ? match[1] : 'unknown';
+  }
+
+
+// 🔁 Map internal platform names to readable ones
+function getPlatformName(): string {
+    const platform = os.platform();
+    switch (platform) {
+      case 'darwin':
+        return 'macOS';
+      case 'win32':
+        return 'Windows';
+      case 'linux':
+        return 'Linux';
+      default:
+        return platform; // fallback to raw value
+    }
+  }
+const platformName = getPlatformName();
+const platformVersion = os.release(); // e.g. 14.4.0 or 10.0.19045
 
 let startTime: Date;
 
@@ -21,27 +48,30 @@ try {
 
 const endTime = new Date();
 
-reporter.generate({
-  jsonDir: 'reports', // Folder where cucumber_report.json is located
-  reportPath: './reports/html', // Output folder for HTML report
-  metadata: {
-    browser: { name: 'chrome', version: 'latest' }, // You can make this dynamic too if needed
-    device: os.hostname(), // Machine name
-    platform: {
-      name: "macOS",
-      version: platformVersion,
-    },
-  },
-  customData: {
-    title: 'Run Info',
-    data: [
-      { label: 'Project', value: 'Contact List App' },
-      { label: 'Release', value: '1.0.0' },
-      { label: 'Start Time', value: startTime.toLocaleString() },
-      { label: 'End Time', value: endTime.toLocaleString() },
-        { label: 'OS Platform', value: platformName },
-      { label: 'OS Version', value: platformVersion },
-      { label: 'Host', value: os.hostname() },
-    ],
-  },
-});
+(async () => {
+    const chromeVersion = await getChromeVersion();
+  
+    reporter.generate({
+      jsonDir: 'reports',
+      reportPath: './reports/html',
+      metadata: {
+        browser: { name: 'chrome', version: chromeVersion },
+        device: os.hostname(),
+        platform: {
+          name: platformName,
+          version: platformVersion,
+        },
+      },
+      customData: {
+        title: 'Run Info',
+        data: [
+          { label: 'Project', value: 'Contact List App' },
+          { label: 'Release', value: '1.0.0' },
+          { label: 'Start Time', value: startTime.toLocaleString() },
+          { label: 'End Time', value: endTime.toLocaleString() },
+          { label: 'OS Platform', value: platformName },
+          { label: 'OS Version', value: platformVersion },
+          { label: 'Host', value: os.hostname() },        ],
+      },
+    });
+  })();

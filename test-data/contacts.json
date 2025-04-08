@@ -1,0 +1,30 @@
+[
+    {
+      "id": "basicContact",
+      "First Name": "Cucumber",
+      "Last Name": "Adaikalam",
+      "Birthdate": "1996-12-07",
+      "Email": "manizivamsd@gmail.com",
+      "Phone": "8098606357",
+      "Address1": "434, Pudumanai 1st street",
+      "Address2": "Rayavaram",
+      "City": "Pudukkottai",
+      "State": "Tamilnadu",
+      "Postal Code": "622506",
+      "Country": "India"
+    },
+    {
+      "id": "advancedContact",
+      "First Name": "Manikandan",
+      "Last Name": "Tester",
+      "Birthdate": "1995-01-01",
+      "Email": "mani@example.com",
+      "Phone": "9000000000",
+      "Address1": "Somewhere",
+      "Address2": "Anywhere",
+      "City": "Chennai",
+      "State": "TN",
+      "Postal Code": "600001",
+      "Country": "India"
+    }
+  ]

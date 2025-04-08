@@ -1,6 +1,8 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import { Page } from 'playwright';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const baseURL = process.env.BASEURL;
 
@@ -15,22 +17,34 @@ When('I click on {string}', async function (buttonText: string) {
   await page.getByRole('button', { name: buttonText }).click();
 });
 
-When('I fill the contact form with the following details:', async function (dataTable) {
-  const page: Page = this.page;
-  const contactData = dataTable.rowsHash();
-
-  await page.getByPlaceholder('First Name').fill(contactData['First Name']);
-  await page.getByPlaceholder('Last Name').fill(contactData['Last Name']);
-  await page.getByPlaceholder('yyyy-MM-dd').fill(contactData['Birthdate']);
-  await page.getByPlaceholder('example@email.com').fill(contactData['Email']);
-  await page.getByPlaceholder('8005551234').fill(contactData['Phone']);
-  await page.getByPlaceholder('Address 1').fill(contactData['Address1']);
-  await page.getByPlaceholder('Address 2').fill(contactData['Address2']);
-  await page.getByPlaceholder('City').fill(contactData['City']);
-  await page.getByPlaceholder('State or Province').fill(contactData['State']);
-  await page.getByPlaceholder('Postal Code').fill(contactData['Postal Code']);
-  await page.getByPlaceholder('Country').fill(contactData['Country']);
-});
+When('I load contact data with id {string}', async function (contactId: string) {
+    const raw = fs.readFileSync(path.join('test-data', 'contacts.json'), 'utf8');
+    const allData = JSON.parse(raw);
+    const found = allData.find((c: any) => c.id === contactId);
+  
+    if (!found) {
+      throw new Error(`Contact data with id '${contactId}' not found.`);
+    }
+  
+    this.contactData = found;
+  });
+  
+  When('I fill the contact form with loaded data', async function () {
+    const page = this.page;
+    const contact = this.contactData;
+  
+    await page.getByPlaceholder('First Name').fill(contact['First Name']);
+    await page.getByPlaceholder('Last Name').fill(contact['Last Name']);
+    await page.getByPlaceholder('yyyy-MM-dd').fill(contact['Birthdate']);
+    await page.getByPlaceholder('example@email.com').fill(contact['Email']);
+    await page.getByPlaceholder('8005551234').fill(contact['Phone']);
+    await page.getByPlaceholder('Address 1').fill(contact['Address1']);
+    await page.getByPlaceholder('Address 2').fill(contact['Address2']);
+    await page.getByPlaceholder('City').fill(contact['City']);
+    await page.getByPlaceholder('State or Province').fill(contact['State']);
+    await page.getByPlaceholder('Postal Code').fill(contact['Postal Code']);
+    await page.getByPlaceholder('Country').fill(contact['Country']);
+  });
 
 When('I submit the form', async function () {
   const page: Page = this.page;

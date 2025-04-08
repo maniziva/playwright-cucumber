@@ -1,0 +1,38 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.43.0-jammy
+    working_directory: ~/project
+
+jobs:
+  test:
+    executor: node-executor
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      - run:
+          name: Set start time
+          command: node -e "require('fs').writeFileSync('reports/start-time.txt', new Date().toISOString())"
+
+      - run:
+          name: Run Cucumber tests
+          command: npx cucumber-js --require-module ts-node/register --require tests/steps/**/*.ts --format json:reports/cucumber_report.json
+
+      - run:
+          name: Generate HTML report
+          command: npx ts-node generate-report.ts
+
+      - store_artifacts:
+          path: reports/html
+          destination: cucumber-report
+
+workflows:
+  test-workflow:
+    jobs:
+      - test

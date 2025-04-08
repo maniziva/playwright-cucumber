@@ -1,5 +1,6 @@
 Feature: Contact List App
 
+@basic
   Scenario: Successful login and logout
     Given I open the Contact List App
     When I login with username "master@gmail.com" and password "Info@1234"
@@ -7,6 +8,7 @@ Feature: Contact List App
     When I click the logout button
     Then I should be navigated back to the login page with heading "Contact List App"
 
+@regression
 Scenario Outline: Add contact from dataset
   Given I open the Contact List App
   When I login with username "master@gmail.com" and password "Info@1234"

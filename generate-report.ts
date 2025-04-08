@@ -62,7 +62,7 @@ const endTime = new Date();
             title: '📋 Test Execution Summary',
             data: [
                 { label: 'Project', value: 'Contact List App' },
-                { label: 'Release', value: '1.0.0' },
+                { label: 'Release', value: '25.04.08' },
                 { label: 'Start Time', value: startTime.toLocaleString() },
                 { label: 'End Time', value: endTime.toLocaleString() },
                 {

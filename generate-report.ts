@@ -52,26 +52,30 @@ const endTime = new Date();
     const chromeVersion = await getChromeVersion();
   
     reporter.generate({
-      jsonDir: 'reports',
-      reportPath: './reports/html',
-      metadata: {
-        browser: { name: 'chrome', version: chromeVersion },
-        device: os.hostname(),
-        platform: {
-          name: platformName,
-          version: platformVersion,
+        jsonDir: 'reports',
+        reportPath: './reports/html',
+        metadata: {
+          browser: { name: 'chrome', version: chromeVersion },
+          device: os.hostname(),
+          platform: {
+            name: platformName,
+            version: platformVersion,
+          },
         },
-      },
-      customData: {
-        title: 'Run Info',
-        data: [
-          { label: 'Project', value: 'Contact List App' },
-          { label: 'Release', value: '1.0.0' },
-          { label: 'Start Time', value: startTime.toLocaleString() },
-          { label: 'End Time', value: endTime.toLocaleString() },
-          { label: 'OS Platform', value: platformName },
-          { label: 'OS Version', value: platformVersion },
-          { label: 'Host', value: os.hostname() },        ],
-      },
-    });
+        customData: {
+          title: '📋 Test Execution Summary',
+          data: [
+            { label: 'Project', value: 'Contact List App' },
+            { label: 'Release', value: '1.0.0' },
+            { label: 'Start Time', value: startTime.toLocaleString() },
+            { label: 'End Time', value: endTime.toLocaleString() },
+            { 
+            label: 'Duration', 
+            value: `${Math.floor((endTime.getTime() - startTime.getTime()) / 60000)} min ${Math.round(((endTime.getTime() - startTime.getTime()) % 60000) / 1000)} sec` 
+            },
+            { label: 'OS Platform', value: platformName },
+            { label: 'Host', value: os.hostname() },        
+          ],
+        },
+        });
   })();

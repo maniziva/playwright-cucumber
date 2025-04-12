@@ -23,3 +23,24 @@ Scenario Outline: Add contact from dataset
     | ContactId        |
     | basicContact     |
     | advancedContact  |
+
+@regression
+  Scenario: User updates a contact successfully
+  Given I open the Contact List App
+  When I login with username "master@gmail.com" and password "Info@1234"
+  Then I should see the heading "Contact List"
+    When I select the first contact from the list
+    And I click on "Edit Contact"
+    And I update the first name to "Manikandan-Updated"
+    And I update the last name to "Adaikalam-Updated"
+    And I update the country to "SriLanka"
+    And I submit the form
+    Then I should be returned to the Contact List page
+
+@regression
+  Scenario: Delete an existing contact from the list
+    Given I open the Contact List App
+    When I login with username "master@gmail.com" and password "Info@1234"
+    Then I should see the heading "Contact List"
+    When I select the first contact from the list
+    And I click the Delete Contact button

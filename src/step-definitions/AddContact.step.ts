@@ -18,7 +18,7 @@ When('I click on {string}', async function (buttonText: string) {
 });
 
 When('I load contact data with id {string}', async function (contactId: string) {
-    const raw = fs.readFileSync(path.join('test-data', 'contacts.json'), 'utf8');
+    const raw = fs.readFileSync(path.join('src/test-data', 'contacts.json'), 'utf8');
     const allData = JSON.parse(raw);
     const found = allData.find((c: any) => c.id === contactId);
   

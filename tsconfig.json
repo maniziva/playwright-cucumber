@@ -9,5 +9,6 @@
       "moduleResolution": "node",
       "types": ["node"]
     },
-    "include": ["features/**/*.ts"]
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules", "dist"]
   }

@@ -1,6 +1,6 @@
 import { Given, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import { page } from '../support/world';
+import { page } from '../support/hooks';
 
 Given('I launch the application', async () => {
   await page.goto('https://example.com/login');
